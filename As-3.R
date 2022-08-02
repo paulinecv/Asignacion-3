@@ -66,7 +66,6 @@ personas <- personas %>%
                 .fns = as.character))
 
 
-
 # IMPUTACIONES -----------------------------------------------------------------
 
 personas[personas == 98 | personas == 99] <- NA
@@ -101,22 +100,37 @@ table(nas_ing$sector_eco)
 
 #-------------------------------------------------------------------------------
 
+# Creacion de la Variable con las imputaciones
+
+# Se considero usar como principal variable de criterio para la imputacion las
+# horas de trabajo ya que como podemos demostrar en los codigos anteriores la 
+# variable de trabajo remunerado alguno datos tienen como valor 2 (que significa
+# que no posee trabajo remunerado) si poseen una cantidad de horas de trabajo, 
+# por lo cual se prefirio trabajar por las horas de trabajo en las imputaciones
+
+# Tambien se utilizaron las variables de sector economico, sexo y grupo de edad 
+# para la imputacion debido a que consideramos que estas podrian dar un mejor
+# funcionamiento a la imputacion
+
 personas_new <- personas %>%
   mutate(ing_laboral_imp = ing_laboral)
 
+
+# Operaciones
 ing_imp <- lm(ing_laboral_imp ~  horas_trab
               + as.factor(sector_eco)
               + sexo
-              + grp_edad, 
+              + grp_edad,
               data=personas_new)
-
-
 
 for (i in 1:nrow(personas_new)) 
 {
   if(is.na(personas_new[i,"ing_laboral_imp"]))
   { personas_new[i,"ing_laboral_imp"]<-predict(ing_imp,newdata = personas_new[i,]) } 
 }
+
+table(personas_new$ing_laboral_imp)
+
 
 
 
