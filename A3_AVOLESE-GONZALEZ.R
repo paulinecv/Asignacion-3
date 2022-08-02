@@ -12,40 +12,6 @@ library(survey)
 
 personas <- read_sav("C:/Users/Samuel/Desktop/Data.Science UCAB/Clase10/encovi_personas2017_ds.sav") 
 
-# SET UP BASES REDUCIDAS --------------------------------------------------
-
-# Inspeccionar tabla
-glimpse(personas)
-
-# Inspeccionar columnas y etiquetas
-personas$CMHP17 %>% class
-personas$CMHP17 %>% attr('label')
-personas$CMHP17 %>% attr('labels')
-
-# Ver todas las etiquetas
-view_df(personas)
-
-# PERSONAS
-cols_personas <- c("ENNUMC", "LIN", "CMHP17", "CMHP18", "CMHP19",
-                   "CMHP22", "EMHP28N", "EMHP28A", "EMHP28S",
-                   "EMHP32", "TMHP36", "TMHP41", "TMHP43",
-                   "TMHP44", "TMHP44BS", "TMHP48", "TMHP45BS",
-                   "PMHP60BS", 
-                   "PESOPERSONA", "GRPEDAD", "AESTUDIO", "Tciudad_max")
-
-# Filtro por las columnas de interes
-personas_reduc <- personas %>%
-  select(all_of(cols_personas))
-
-
-# MODIFICACIONES ADICIONALES ----------------------------------------------
-
-# Guardo el archivo para trabajar en clases
-write_sav(personas_reduc, "C:/Users/Samuel/Desktop/Data.Science UCAB/Clase10/encovi_personas2017_ds.sav")
-
-# Modificaciones para quedar igual que uds
-personas <- personas_reduc
-
 
 # SET  UP -----------------------------------------------------------------
 
@@ -130,15 +96,4 @@ for (i in 1:nrow(personas_new))
 }
 
 table(personas_new$ing_laboral_imp)
-
-
-
-
-
-
-
-
-
-
-
 
